@@ -1,0 +1,334 @@
+{
+  "info": {
+    "_postman_id": "755d929c-a2e4-40e4-92d6-f36f98a44482",
+    "name": "BBC",
+    "schema": "https://schema.getpostman.com/json/collection/v2.0.0/collection.json"
+  },
+  "item": [
+    {
+      "name": "BBC Endpoint Automation Tests",
+      "item": [
+        {
+          "name": "Scenario 1",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "id": "cbcada22-5b66-40d6-84c3-10d427ed98b1",
+                "exec": [
+                  "//both assertions should pass",
+                  "pm.test(\"HTTP status code of the response is 200\", () => ",
+                  "{",
+                  "   pm.expect(pm.response.to.have.status(200));",
+                  "});",
+                  "pm.test(\"The response time of the request is below 1000 milliseconds\", () => ",
+                  "{",
+                  "   pm.expect(pm.response.responseTime).to.be.below(1000);    ",
+                  "});"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "_postman_id": "bc0201f0-71bb-4b31-9cfb-b2bff6c22c06",
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          },
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": "https://testapi.io/api/ottplatform/media"
+          },
+          "response": []
+        },
+        {
+          "name": "Scenario 2",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "id": "e1e2bb2d-e411-482a-aed1-bfee44a28cf2",
+                "exec": [
+                  "//both assertions should pass",
+                  "pm.test(\"'ID' field is never empty\", () => ",
+                  "{",
+                  "  const responseJson = pm.response.json();",
+                  "  for (var i = 0; i<14;i++){",
+                  "  pm.expect(responseJson.data[i].id).to.not.eql(\"\");",
+                  "  pm.expect(responseJson.data[i].id).to.not.eql(null);",
+                  "  }",
+                  "});",
+                  "pm.test(\"'Segment_type' field for evey track is 'music'\", () => ",
+                  "{",
+                  "  const responseJson = pm.response.json();",
+                  "  for (var i = 0; i<14;i++){",
+                  "  pm.expect(responseJson.data[i].segment_type).to.eql(\"music\");",
+                  "  }  ",
+                  "});",
+                  ""
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "_postman_id": "b693f6e3-875e-49f2-a5be-5beb52d0c866",
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          },
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": "https://testapi.io/api/ottplatform/media"
+          },
+          "response": []
+        },
+        {
+          "name": "Scenario 3",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "id": "327a2c19-9743-4629-a3ec-d4d136e12da7",
+                "exec": [
+                  "pm.test(\"'Primary' field in 'title_list' is never empty\", () => ",
+                  "//at current conditions should pass",
+                  "{",
+                  "  const responseJson = pm.response.json();",
+                  "  for (var i = 0; i<14;i++){",
+                  "  pm.expect(responseJson.data[i].title_list.primary).to.not.eql(\"\");",
+                  "  pm.expect(responseJson.data[i].title_list.primary).to.not.eql(null);",
+                  "  }",
+                  "});"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "_postman_id": "0f646564-e402-4ac9-8fe8-4cc9aa585d96",
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          },
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": "https://testapi.io/api/ottplatform/media"
+          },
+          "response": []
+        },
+        {
+          "name": "Scenario 4",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "id": "de1bee7f-97b3-4810-9427-840c17fa42c3",
+                "exec": [
+                  "pm.test(\"Only one track in the list has 'now_playing' field in 'offset' as true\", () => ",
+                  "//at current conditions should pass",
+                  "{",
+                  "  const responseJson = pm.response.json();",
+                  "  var n = 0;",
+                  "  for (var i = 0; i<14;i++){",
+                  "      if (responseJson.data[i].offset.now_playing == true) { ",
+                  "      n++",
+                  "      }",
+                  "  }",
+                  "  pm.expect(n).to.eql(1);",
+                  "});"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "_postman_id": "3cfce7b9-8239-4307-b2d1-c4521a84787f",
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          },
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": "https://testapi.io/api/ottplatform/media"
+          },
+          "response": []
+        },
+        {
+          "name": "Scenario 5",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "id": "0d6713fd-d20c-4236-9382-651e73e2c7b2",
+                "exec": [
+                  "pm.test(\"The response header the 'date' is valid\", () => ",
+                  "//should fail with given date in api",
+                  "{",
+                  " var d = new Date();",
+                  " var today = d.toDateString();",
+                  " var todayday = today.substring(0,3);",
+                  " var todaydate = today.substring(8,10);",
+                  " var todaymonth = today.substring(4,7);",
+                  " var headers = pm.response.headers;",
+                  " var header_date = headers.get(\"Date\");",
+                  " var headerday = header_date.substring(0,3);",
+                  " var headerdate = header_date.substring(5,7);",
+                  " var headermonth = header_date.substring(8,11);",
+                  " pm.expect(todayday).to.be.eql(headerday);",
+                  " pm.expect(todaydate).to.be.eql(headerdate);",
+                  " pm.expect(todaymonth).to.be.eql(headermonth);",
+                  "});"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "_postman_id": "cf49a9ab-0bfb-40e6-81cb-0875f9ca56e8",
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          },
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": "https://testapi.io/api/ottplatform/media"
+          },
+          "response": []
+        }
+      ],
+      "_postman_id": "d0a47578-034a-4b32-a8b1-6260b3436634"
+    },
+    {
+      "name": "BBC Endpoint Manual Tests",
+      "item": [
+        {
+          "name": "Manual Test 1: No Duplicate Track Names in Playlist",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "id": "b07b9ce2-66f6-438f-82aa-8c2e76ba2471",
+                "exec": [
+                  "pm.test(\"'Primary' and 'Secondary' fields combination is unique for each track\", () => ",
+                  "//at current conditions should pass",
+                  "{",
+                  "  const responseJson = pm.response.json();",
+                  "  const songprimary = [];",
+                  "  const songsecondary = [];",
+                  "  const fulltitle = [''];",
+                  "  for (var i = 0; i<14;i++){",
+                  "  songprimary[i] = responseJson.data[i].title_list.primary;",
+                  "  songsecondary[i] = responseJson.data[i].title_list.secondary;",
+                  "  fulltitle[i] = songprimary[i] + ' ' + songsecondary[i];",
+                  "  }",
+                  "  function checkIfDuplicateExists(w){",
+                  "    return new Set(w).size !== w.length ",
+                  "  }",
+                  "  pm.expect(checkIfDuplicateExists(fulltitle)).to.eql(false)",
+                  "});"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "_postman_id": "4dff431f-2e6e-4e4d-b318-591d523d4433",
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          },
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": "https://testapi.io/api/ottplatform/media"
+          },
+          "response": []
+        },
+        {
+          "name": "Manual Test 2: At Least 2 Nirvana Songs In Playlist",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "id": "a1ea98fd-a1ba-4c4e-8631-74c6c9af976f",
+                "exec": [
+                  "pm.test(\"At Least 2 Nirvana Songs in Playlist\", () => ",
+                  "//at current conditions test should fail",
+                  "{",
+                  " const responseJson = pm.response.json();",
+                  " const songprimary = [];",
+                  " var n = 0;",
+                  " for (var i = 0; i<14;i++)",
+                  " {",
+                  "  songprimary[i] = responseJson.data[i].title_list.primary;",
+                  "  if (songprimary[i].includes(\"Nirvana\")) {",
+                  "      n++",
+                  "  }",
+                  " }",
+                  "  pm.expect(n).to.be.greaterThan(1);",
+                  "});"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "_postman_id": "22374ae5-4aa4-4b03-90d8-c5512cadfd21",
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          },
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": "https://testapi.io/api/ottplatform/media"
+          },
+          "response": []
+        },
+        {
+          "name": "Manual Test 3: In response headers Access-Control-Allow-Methods DELETE is not available",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "id": "845b2fde-f7a2-4b86-a088-1218e17db6f2",
+                "exec": [
+                  "pm.test(\"In response headers Access-Control-Allow-Methods DELETE is not available\", () => ",
+                  "//at current conditions test should fail",
+                  "{",
+                  " var headers = pm.response.headers;",
+                  " var header_access = headers.get(\"Access-Control-Allow-Methods\");",
+                  " var deleteincluded = 0;",
+                  " if (header_access.includes(\"DELETE\")){",
+                  "     deleteincluded = 1;",
+                  " }",
+                  " pm.expect(deleteincluded).to.be.eql(0);",
+                  "});"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "_postman_id": "9288f9f4-62bc-4f68-9b11-7fa7a83e8f88",
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          },
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": "https://testapi.io/api/ottplatform/media"
+          },
+          "response": []
+        }
+      ],
+      "_postman_id": "dd6b389d-791d-44e6-8ac6-a283048e6bb0"
+    }
+  ],
+  "variable": [
+    {
+      "id": "3d6ec2c6-8a99-4189-9b44-4a8d2e11e35e",
+      "key": "responseJson",
+      "value": "",
+      "type": "string"
+    },
+    {
+      "id": "4fcddf93-5e2d-4302-a795-a770971f5ea6",
+      "key": "fulltitle",
+      "value": "",
+      "type": "string"
+    }
+  ]
+}
